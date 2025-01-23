@@ -1,0 +1,67 @@
+name: Deploy ADF Pipelines
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the workflow on pull requests to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
+      with:
+        azcliversion: '2.30.0'  # Correct input for specifying Azure CLI version
+        inlineScript: |
+          az --version  # Example inline script to verify Azure CLI setup
+
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Login to Azure
+      uses: azure/login@v1 
+      with:
+        creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}  # Make sure to store your Azure credentials as secrets
+
+    - name: Read pipeline JSON files and deploy
+      run: |
+        # Ensure the correct path to the JSON files
+        pipeline1=$(cat ./pipeline/TestPipeline1.json)
+        pipeline2=$(cat ./pipeline/AdobeExportPipeline.json)
+        
+        # Construct a JSON array with the pipeline contents
+        pipelines=$(jq -n \
+          --arg pipeline1 "$pipeline1" \
+          --arg pipeline2 "$pipeline2" \
+          '[
+            {
+              "name": "TestPipeline1",
+              "definition": $pipeline1 | fromjson
+            },
+            {
+              "name": "AdobeExportPipeline",
+              "definition": $pipeline2 | fromjson
+            }
+          ]')
+
+        # Deploy using Bicep (or ARM template)
+        az deployment group create \
+          --resource-group "komatsu" \
+          --template-file ./bicep/modules/testadf.bicep \
+          --parameters dataFactoryName=ADF-components \
+          --parameters pipelines="$pipelines"
+
+    # - name: Deploy Bicep Template
+    #   run: |
+    #     az deployment group create \
+    #       --resource-group komatsu \
+    #       --template-file ./bicep/main.bicep \
+    #       --parameters @./bicep/parameter.json
