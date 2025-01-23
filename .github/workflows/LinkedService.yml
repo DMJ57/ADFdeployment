@@ -65,14 +65,20 @@ jobs:
       run: |
         # Ensure the correct path to the JSON files
         linkedService1=$(cat ./linkedService/TestLinkedService.json)
+        linkedService2=$(cat ./linkedService/StorageTable.json)
 
         # Construct a JSON array with the linkedService contents
         linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
+          --arg linkedService2 "$linkedService2" \
           '[
             {
               "name": "NewBlobStorage",
               "definition": $linkedService1 | fromjson
+            },
+            {
+              "name": "NewStorageTable",
+              "definition": $linkedService2 | fromjson
             }
           ]')
 

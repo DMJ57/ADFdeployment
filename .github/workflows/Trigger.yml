@@ -65,14 +65,20 @@ jobs:
       run: |
           # Ensure the correct path to the JSON files
           TestTrigger1=$(cat ./trigger/TestTrigger.json)
-  
+          TestTrigger2=$(cat ./trigger/24hourtrigger.json)
+
           # Construct a JSON array with the Trigger contents
           TestTrigger=$(jq -n \
             --arg TestTrigger1 "$TestTrigger1" \
+            --arg TestTrigger2 "$TestTrigger2" \
             '[
               {
                 "name": "BicepTrigger",
                 "definition": $TestTrigger1 | fromjson
+              },
+              {
+                "name": "24HourTrigger",
+                "definition": $TestTrigger2 | fromjson
               }
             ]')
   
