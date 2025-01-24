@@ -1,16 +1,16 @@
 name: Deploy ADF LinkedService
 
 on:
-  # workflow_call:
-  #   inputs:
-  #     branch:
-  #       required: true
-  #       type: string
-  workflow_run:
-    workflows:
-       - Deploy ADF Components Sequentially
-    types:
-       - completed
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+  # workflow_run:
+  #   workflows:
+  #      - Deploy ADF Components Sequentially
+  #   types:
+  #      - completed
 
 jobs:
   build:
