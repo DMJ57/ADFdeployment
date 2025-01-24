@@ -27,7 +27,7 @@ jobs:
       run: sudo apt-get install jq
 
     - name: Login to Azure
-      uses: azure/login@v1 
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
 
@@ -37,7 +37,7 @@ jobs:
             --resource-group komatsu \
             --template-file ./bicep/main.bicep \
             --parameters @./bicep/parameters.json
-  
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
       run: sudo apt-get install jq
 
     - name: Login to Azure
-      uses: azure/login@v1 
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}  # Make sure to store your Azure credentials as secrets
 
@@ -81,43 +81,10 @@ jobs:
                 "definition": $TestTrigger2 | fromjson
               }
             ]')
-  
+
           # Deploy using Bicep (or ARM template)
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/trigger.bicep \
             --parameters dataFactoryName=ADF-components \
             --parameters triggers="$TestTrigger"
-
-
-  # tag:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #       - name: Checkout repository
-  #         uses: actions/checkout@v2
-           
-  #       - name: Determine new version
-  #         id: new_version
-  #         run: |
-  #           # Extract the latest tag
-  #           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-  #           echo "Latest tag: $latest_tag"
-            
-  #           # Increment the patch version
-  #           IFS='.' read -r -a parts <<< "${latest_tag:1}"
-  #           patch=${parts[2]}
-  #           new_patch=$((patch + 1))
-  #           new_tag="v${parts[0]}.${parts[1]}.$new_patch"
-            
-  #           echo "New version: $new_tag"
-  #           echo "::set-output name=tag::$new_tag"
-  #       - name: Create a new tag
-  #         run: |
-  #           new_tag=${{ steps.new_version.outputs.tag }}
-  #           git tag -a $new_tag -m "Automated release for version $new_tag"
-  #           git push origin $new_tag
-  #       - name: Push new tag to GitHub
-  #         run: |
-  #           new_tag=${{ steps.new_version.outputs.tag }}
-  #           git push origin $new_tag
-  

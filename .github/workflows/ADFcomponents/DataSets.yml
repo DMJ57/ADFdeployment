@@ -38,7 +38,7 @@ jobs:
           dataset2=$(cat ./datasets/TestDataset2.json)
           dataset3=$(cat ./datasets/komatsu_test.json)
 
-          # Construct a JSON array with the pipeline contents
+          # Construct a JSON array with the dataset contents
           datasets=$(jq -n \
             --arg dataset1 "$dataset1" \
             --arg dataset2 "$dataset2" \
@@ -53,7 +53,7 @@ jobs:
                 "definition": $dataset2 | fromjson
               },
               {
-                "name": "Abc",
+                "name": "komatsu_test",
                 "definition": $dataset3 | fromjson
               }
             ]')
@@ -61,6 +61,6 @@ jobs:
           # Deploy using Bicep (or ARM template)
           az deployment group create \
             --resource-group "komatsu" \
-            --template-file ./bicep//modules/dataset.bicep \
+            --template-file ./bicep/modules/dataset.bicep \
             --parameters dataFactoryName=ADF-components \
-            --parameters datasets="$datasets" 
+            --parameters datasets="$datasets"
