@@ -3,7 +3,7 @@ name: Deploy ADF Components Sequentially
 on:
   push:
     branches:
-      - souvikADFChanges
+      - main
  
      
 jobs:
