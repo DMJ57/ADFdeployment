@@ -8,6 +8,12 @@ on:
     branches:
       - souvikADFChanges  # Trigger the workflow on pull requests to the main branch
 
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+
 jobs:
   build:
     runs-on: ubuntu-latest
