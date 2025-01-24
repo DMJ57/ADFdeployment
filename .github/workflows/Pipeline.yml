@@ -6,12 +6,6 @@ on:
       branch:
         required: true
         type: string
-  push:
-    branches:
-      - souvikADFChanges  # Trigger the workflow on push to the main branch
-  pull_request:
-    branches:
-      - souvikADFChanges  # Trigger the workflow on pull requests to the main branch
 
 
 jobs:

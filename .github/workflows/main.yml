@@ -7,6 +7,28 @@ on:
  
      
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
+      with:
+        azcliversion: '2.30.0'  # Correct input for specifying Azure CLI version
+        inlineScript: |
+          az --version  # Example inline script to verify Azure CLI setup
+
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
+
   deploy-LinkedService:
     uses: ./.github/workflows/LinkedService.yml
     with: 

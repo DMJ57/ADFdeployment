@@ -6,13 +6,6 @@ on:
       branch:
         required: true
         type: string
-  push:
-    branches:
-      - souvikADFChanges
-  pull_request:
-    branches:
-      - souvikADFChanges
-
   
 
 jobs:
