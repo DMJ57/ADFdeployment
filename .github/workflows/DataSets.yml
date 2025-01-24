@@ -1,11 +1,16 @@
 name: Deploy Datasets
 
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
+  # workflow_call:
+  #   inputs:
+  #     branch:
+  #       required: true
+  #       type: string
+  workflow_run:
+    workflows:
+       - Deploy ADF LinkedService
+    types:
+       - completed
 
 jobs:
   deploy:

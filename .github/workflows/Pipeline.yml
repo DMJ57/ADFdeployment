@@ -1,11 +1,16 @@
 name: Deploy ADF Pipelines
 
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
+  # workflow_call:
+  #   inputs:
+  #     branch:
+  #       required: true
+  #       type: string
+  workflow_run:
+    workflows:
+       - Deploy Datasets
+    types:
+       - completed
 jobs:
   deploy:
     runs-on: ubuntu-latest
