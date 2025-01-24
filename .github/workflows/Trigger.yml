@@ -1,12 +1,11 @@
 name: Deploy ADF Trigger
 
 on:
-  push:
-    branches:
-      - main  # Trigger the workflow on push to the main branch
-  pull_request:
-    branches:
-      - main  # Trigger the workflow on pull requests to the main branch
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
 
 jobs:
   build:
