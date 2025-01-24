@@ -1,10 +1,10 @@
 name: Deploy ADF Components Sequentially
- 
+
 on:
   push:
     branches:
-      - souvikADFChanges  # Trigger workflow on push to the main branch
- 
+      - souvikADFChanges
+
 jobs:
   deploy-LinkedService:
     name: Deploy LinkedService.yml
@@ -16,9 +16,9 @@ jobs:
       - name: Set up Azure CLI
         uses: azure/CLI@v1
         with:
-          azcliversion: '2.30.0'  # Correct input for specifying Azure CLI version
+          azcliversion: '2.30.0'
           inlineScript: |
-            az --version  # Example inline script to verify Azure CLI setup
+            az --version
 
       - name: Install yq
         run: sudo apt-get update && sudo apt-get install -y yq
@@ -26,22 +26,22 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}  # Make sure to store your Azure credentials as secrets
+          creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}
       
       - name: Validate LinkedService.yml
         run: |
-            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > LinkedService.json
-            az deployment group validate \
+          yq eval ./.github/workflows/ADFcomponents/LinkedService.yml -o=json > LinkedService.json
+          az deployment group validate \
             --resource-group "komatsu" \
             --template-file LinkedService.json
 
       - name: Deploy LinkedService.yml
         run: |
-            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > LinkedService.json
-            az deployment group create \
+          yq eval ./.github/workflows/ADFcomponents/LinkedService.yml -o=json > LinkedService.json
+          az deployment group create \
             --resource-group "komatsu" \
             --template-file LinkedService.json
- 
+
   deploy-DataSets:
     name: Deploy DataSets.yml
     runs-on: ubuntu-latest
@@ -49,14 +49,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
+
       - name: Deploy DataSets.yml
         run: |
           echo "Deploying DataSets.yml"
-          az deployment group create 
-          --resource-group "komatsu" \
-          --template-file ./.github/workflows/ADFcomponents/DataSets.yml
- 
+          az deployment group create \
+            --resource-group "komatsu" \
+            --template-file ./.github/workflows/ADFcomponents/DataSets.yml
+
   deploy-Pipeline:
     name: Deploy Pipeline.yml
     runs-on: ubuntu-latest
@@ -64,13 +64,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
+
       - name: Deploy Pipeline.yml
         run: |
           echo "Deploying Pipeline.yml"
           az deployment group create \
-          --resource-group "komatsu" \
-          --template-file ./.github/workflows/ADFcomponents/Pipeline.yml
+            --resource-group "komatsu" \
+            --template-file ./.github/workflows/ADFcomponents/Pipeline.yml
 
   deploy-Trigger:
     name: Deploy Trigger.yml
@@ -79,10 +79,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
+
       - name: Deploy Trigger.yml
         run: |
           echo "Deploying Trigger.yml"
           az deployment group create \
-          --resource-group "komatsu" \
-          --template-file ./.github/workflows/ADFcomponents/Trigger.yml
+            --resource-group "komatsu" \
+            --template-file ./.github/workflows/ADFcomponents/Trigger.yml
