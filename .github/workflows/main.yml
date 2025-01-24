@@ -20,7 +20,7 @@ jobs:
           echo "Deploying LinkedService.yml"
           az deployment group create \
             --resource-group "komatsu" \
-            --template-file ./ADFcomponents/LinkedService.yml
+            --template-file ./.github/workflows/ADFcomponents/LinkedService.yml
  
       # Deploy file2.yml
       - name: Deploy DataSets.yml
@@ -28,7 +28,7 @@ jobs:
           echo "Deploying DataSets.yml"
           az deployment group create 
           --resource-group "komatsu" \
-          --template-file ./ADFcomponents/DataSets.yml
+          --template-file ./.github/workflows/ADFcomponents/DataSets.yml
  
       # Deploy file3.yml
       - name: Deploy Pipeline.yml
@@ -36,7 +36,7 @@ jobs:
           echo "Deploying Pipeline.yml"
           az deployment group create \
           --resource-group "komatsu" \
-          --template-file ./ADFcomponents/Pipeline.yml
+          --template-file ./.github/workflows/ADFcomponents/Pipeline.yml
  
       # Deploy file4.yml
       - name: Deploy Trigger.yml
@@ -44,4 +44,4 @@ jobs:
           echo "Deploying Trigger.yml"
           az deployment group create \
           --resource-group "komatsu" \
-          --template-file ./ADFcomponents/Trigger.yml
+          --template-file ./.github/workflows/ADFcomponents/Trigger.yml
