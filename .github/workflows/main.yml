@@ -8,25 +8,25 @@ on:
      
 jobs:
   deploy-LinkedService:
-    uses: ./.github/workflows/ADFcomponents/LinkedService.yml
+    uses: ./.github/workflows/LinkedService.yml
     with: 
       branch: souvikADFChanges
     
 
   deploy-DataSets:
-    uses: ./.github/workflows/ADFcomponents/DataSets.yml
+    uses: ./.github/workflows/DataSets.yml
     with: 
       branch: souvikADFChanges
     needs: deploy-LinkedService
     
   deploy-Pipeline:
-    uses: ./.github/workflows/ADFcomponents/Pipeline.yml
+    uses: ./.github/workflows/Pipeline.yml
     with: 
       branch: souvikADFChanges
     needs: deploy-DataSets
 
   deploy-Trigger:
-    uses: ./.github/workflows/ADFcomponents/Trigger.yml
+    uses: ./.github/workflows/Trigger.yml
     with: 
       branch: souvikADFChanges
     needs: deploy-Pipeline

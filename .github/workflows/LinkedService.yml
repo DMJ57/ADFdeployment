@@ -1,12 +1,11 @@
 name: Deploy ADF LinkedService
 
-workflow_call:
+on:
+  workflow_call:
     inputs:
       branch:
         required: true
         type: string
-on:
-  
   push:
     branches:
       - souvikADFChanges
