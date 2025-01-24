@@ -3,7 +3,7 @@ name: Deploy ADF Components Sequentially
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to the main branch
+      - souvikADFChanges  # Trigger workflow on push to the main branch
  
 jobs:
   deploy-LinkedService:
