@@ -12,7 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
+      
+      - name: Validate LinkedService.yml
+        run: |
+            az deployment group validate \
+            --resource-group "komatsu" \
+            --template-file ./.github/workflows/ADFcomponents/LinkedService.yml
+            
       - name: Deploy LinkedService.yml
         run: |
             az deployment group create \
