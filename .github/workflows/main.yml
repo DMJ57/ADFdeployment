@@ -20,6 +20,9 @@ jobs:
           inlineScript: |
             az --version  # Example inline script to verify Azure CLI setup
 
+      - name: Install yq
+        run: sudo apt-get update && sudo apt-get install -y yq
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -27,7 +30,8 @@ jobs:
       
       - name: Validate LinkedService.yml
         run: |
-            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > ./.github/workflows/ADFcomponents/LinkedService.json
+            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > LinkedService.json
+            cat LinkedService.json
             az deployment group validate \
             --resource-group "komatsu" \
             --template-file ./.github/workflows/ADFcomponents/LinkedService.json
