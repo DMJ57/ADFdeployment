@@ -7,9 +7,10 @@ on:
   #       required: true
   #       type: string
   workflow_run:
-    workflows: ["Deploy ADF Components Sequentially"]
+    workflows:
+       - Deploy ADF Components Sequentially
     types:
-      - completed
+       - completed
 
 jobs:
   build:
