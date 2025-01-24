@@ -6,7 +6,7 @@
         "name": "CopyAdobeAnalyticsData",
         "type": "Copy",
         "linkedServiceName": {
-          "referenceName": "AdobeAnalyticsLinkedService",
+          "referenceName": "NewBlobStorage",
           "type": "LinkedServiceReference"
         },
         "source": {
