@@ -1,0 +1,47 @@
+name: Deploy YAML Files Sequentially
+ 
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      # Checkout your code
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      # Deploy file1.yml
+      - name: Deploy file1.yml
+        run: |
+          echo "Deploying file1.yml"
+          az deployment group create \
+            --resource-group "komatsu" \
+            --template-file ./ADF components/LinkedService.yml
+ 
+      # Deploy file2.yml
+      - name: Deploy file2.yml
+        run: |
+          echo "Deploying file2.yml"
+          az deployment group create 
+          --resource-group "komatsu" \
+          --template-file ./ADF components/DataSets.yml
+ 
+      # Deploy file3.yml
+      - name: Deploy file3.yml
+        run: |
+          echo "Deploying file3.yml"
+          az deployment group create \
+          --resource-group "komatsu" \
+          --template-file ./ADF components/Pipeline.yml
+ 
+      # Deploy file4.yml
+      - name: Deploy file4.yml
+        run: |
+          echo "Deploying file4.yml"
+          az deployment group create \
+          --resource-group "komatsu" \
+          --template-file ./ADF components/Trigger.yml
