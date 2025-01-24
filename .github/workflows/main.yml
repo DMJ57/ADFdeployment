@@ -31,17 +31,16 @@ jobs:
       - name: Validate LinkedService.yml
         run: |
             yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > LinkedService.json
-            cat LinkedService.json
             az deployment group validate \
             --resource-group "komatsu" \
-            --template-file ./.github/workflows/ADFcomponents/LinkedService.json
+            --template-file LinkedService.json
 
       - name: Deploy LinkedService.yml
         run: |
-            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > ./.github/workflows/ADFcomponents/LinkedService.json
+            yq eval -o=json ./.github/workflows/ADFcomponents/LinkedService.yml > LinkedService.json
             az deployment group create \
             --resource-group "komatsu" \
-            --template-file ./.github/workflows/ADFcomponents/LinkedService.json
+            --template-file LinkedService.json
  
   deploy-DataSets:
     name: Deploy DataSets.yml
