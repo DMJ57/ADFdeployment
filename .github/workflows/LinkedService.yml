@@ -1,5 +1,9 @@
 name: Deploy ADF LinkedService
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   workflow_call:
     inputs:
@@ -33,7 +37,7 @@ jobs:
             --resource-group komatsu \
             --template-file ./bicep/main.bicep \
             --parameters @./bicep/parameters.json
-            
+
   deploy:
     runs-on: ubuntu-latest
 
