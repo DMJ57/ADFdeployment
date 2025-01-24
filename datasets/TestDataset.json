@@ -2,7 +2,7 @@
   "name": "TestDataset",
   "properties": {
     "linkedServiceName": {
-      "referenceName": "TestLinkedService", 
+      "referenceName": "NewBlobStorage", 
       "type": "LinkedServiceReference"
     },
     "type": "AzureBlob",
