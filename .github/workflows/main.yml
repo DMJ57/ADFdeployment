@@ -15,33 +15,33 @@ jobs:
         uses: actions/checkout@v3
  
       # Deploy file1.yml
-      - name: Deploy file1.yml
+      - name: Deploy LinkedService.yml
         run: |
-          echo "Deploying file1.yml"
+          echo "Deploying LinkedService.yml"
           az deployment group create \
             --resource-group "komatsu" \
-            --template-file ./ADF components/LinkedService.yml
+            --template-file ./ADFcomponents/LinkedService.yml
  
       # Deploy file2.yml
-      - name: Deploy file2.yml
+      - name: Deploy DataSets.yml
         run: |
-          echo "Deploying file2.yml"
+          echo "Deploying DataSets.yml"
           az deployment group create 
           --resource-group "komatsu" \
-          --template-file ./ADF components/DataSets.yml
+          --template-file ./ADFcomponents/DataSets.yml
  
       # Deploy file3.yml
-      - name: Deploy file3.yml
+      - name: Deploy Pipeline.yml
         run: |
-          echo "Deploying file3.yml"
+          echo "Deploying Pipeline.yml"
           az deployment group create \
           --resource-group "komatsu" \
-          --template-file ./ADF components/Pipeline.yml
+          --template-file ./ADFcomponents/Pipeline.yml
  
       # Deploy file4.yml
-      - name: Deploy file4.yml
+      - name: Deploy Trigger.yml
         run: |
-          echo "Deploying file4.yml"
+          echo "Deploying Trigger.yml"
           az deployment group create \
           --resource-group "komatsu" \
-          --template-file ./ADF components/Trigger.yml
+          --template-file ./ADFcomponents/Trigger.yml
