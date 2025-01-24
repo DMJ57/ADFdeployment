@@ -26,29 +26,29 @@ jobs:
               }
         enable-AzPSSession: true
 
-  deploy-LinkedService:
-    needs: build
-    uses: ./.github/workflows/LinkedService.yml
-    with: 
-      branch: souvikADFChanges
+  # deploy-LinkedService:
+  #   needs: build
+  #   uses: ./.github/workflows/LinkedService.yml
+  #   with: 
+  #     branch: souvikADFChanges
     
 
-  deploy-DataSets:
-    needs: deploy-LinkedService
-    uses: ./.github/workflows/DataSets.yml
-    with: 
-      branch: souvikADFChanges
+  # deploy-DataSets:
+  #   needs: deploy-LinkedService
+  #   uses: ./.github/workflows/DataSets.yml
+  #   with: 
+  #     branch: souvikADFChanges
     
     
-  deploy-Pipeline:
-    needs: deploy-DataSets
-    uses: ./.github/workflows/Pipeline.yml
-    with: 
-      branch: souvikADFChanges
+  # deploy-Pipeline:
+  #   needs: deploy-DataSets
+  #   uses: ./.github/workflows/Pipeline.yml
+  #   with: 
+  #     branch: souvikADFChanges
     
-  deploy-Trigger:
+  # deploy-Trigger:
     
-    uses: ./.github/workflows/Trigger.yml
-    with: 
-      branch: souvikADFChanges
+  #   uses: ./.github/workflows/Trigger.yml
+  #   with: 
+  #     branch: souvikADFChanges
     
