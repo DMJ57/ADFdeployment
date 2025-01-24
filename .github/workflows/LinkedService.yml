@@ -7,11 +7,9 @@ on:
 
   #       required: true
   #       type: string
-  workflow_run:
-    workflows:
-       - Deploy ADF Components Sequentially
-    types:
-       - completed
+  push:
+    branches:
+      - main
 
 jobs:
   build:
