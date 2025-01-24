@@ -3,7 +3,7 @@ name: Deploy YAML Files Sequentially
 on:
   push:
     branches:
-      - main  # Trigger on push to main branch
+      - souvikADFChanges  # Trigger on push to main branch
  
 jobs:
   deploy:
