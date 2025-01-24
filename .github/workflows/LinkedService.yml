@@ -1,15 +1,15 @@
 name: Deploy ADF LinkedService
 
-permissions:
-  id-token: write
-  contents: read
-
 on:
   workflow_call:
     inputs:
       branch:
         required: true
         type: string
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build:
