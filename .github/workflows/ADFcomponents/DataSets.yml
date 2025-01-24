@@ -1,6 +1,11 @@
 name: Deploy Datasets
 
 on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
   push:
     branches:
       - souvikADFChanges  # Trigger the workflow on push to the main branch
@@ -8,11 +13,7 @@ on:
     branches:
       - souvikADFChanges  # Trigger the workflow on pull requests to the main branch
 
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
+ 
 
 jobs:
   deploy:
