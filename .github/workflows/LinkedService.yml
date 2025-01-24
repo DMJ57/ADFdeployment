@@ -35,6 +35,7 @@ jobs:
             --parameters @./bicep/parameters.json
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
