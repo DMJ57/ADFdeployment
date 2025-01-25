@@ -1,11 +1,6 @@
 name: Deploy Datasets
 
 on:
-  # workflow_call:
-  #   inputs:
-  #     branch:
-  #       required: true
-  #       type: string
   workflow_run:
     workflows:
        - Deploy ADF LinkedService
@@ -33,7 +28,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Make sure to store your Azure credentials as secrets
+          creds: ${{ secrets.SPN_CREDENTIALS }}  # Make sure to store your Azure credentials as secrets
 
       - name: Read pipeline Dataset JSON files and deploy
         run: |
@@ -42,7 +37,7 @@ jobs:
           dataset2=$(cat ./datasets/TestDataset2.json)
           dataset3=$(cat ./datasets/komatsu_test.json)
 
-          # Construct a JSON array with the pipeline contents
+          # Construct a JSON array with the dataset contents
           datasets=$(jq -n \
             --arg dataset1 "$dataset1" \
             --arg dataset2 "$dataset2" \
@@ -57,7 +52,7 @@ jobs:
                 "definition": $dataset2 | fromjson
               },
               {
-                "name": "Abc",
+                "name": "komatsu_test",
                 "definition": $dataset3 | fromjson
               }
             ]')
@@ -65,6 +60,6 @@ jobs:
           # Deploy using Bicep (or ARM template)
           az deployment group create \
             --resource-group "komatsu" \
-            --template-file ./bicep/dataset.bicep \
-            --parameters dataFactoryName=ADF033 \
+            --template-file ./bicep/modules/dataset.bicep \
+            --parameters dataFactoryName=ADF-components \
             --parameters datasets="$datasets"

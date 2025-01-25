@@ -1,16 +1,13 @@
 name: Deploy ADF Pipelines
 
 on:
-  # workflow_call:
-  #   inputs:
-  #     branch:
-  #       required: true
-  #       type: string
   workflow_run:
     workflows:
        - Deploy Datasets
     types:
        - completed
+
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,16 +27,16 @@ jobs:
       run: sudo apt-get install jq
 
     - name: Login to Azure
-      uses: azure/login@v1 
+      uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_SPN_CREDENTIAL }}  # Make sure to store your Azure credentials as secrets
+        creds: ${{ secrets.SPN_CREDENTIALS }}  # Make sure to store your Azure credentials as secrets
 
     - name: Read pipeline JSON files and deploy
       run: |
         # Ensure the correct path to the JSON files
         pipeline1=$(cat ./pipeline/TestPipeline1.json)
         pipeline2=$(cat ./pipeline/AdobeExportPipeline.json)
-        
+
         # Construct a JSON array with the pipeline contents
         pipelines=$(jq -n \
           --arg pipeline1 "$pipeline1" \
@@ -61,10 +58,3 @@ jobs:
           --template-file ./bicep/modules/testadf.bicep \
           --parameters dataFactoryName=ADF-components \
           --parameters pipelines="$pipelines"
-
-    # - name: Deploy Bicep Template
-    #   run: |
-    #     az deployment group create \
-    #       --resource-group komatsu \
-    #       --template-file ./bicep/main.bicep \
-    #       --parameters @./bicep/parameter.json
